@@ -20,6 +20,7 @@ RUN apk add --update ca-certificates openssl bash gettext git curl make jq coreu
 RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 COPY --from=helm3 /usr/local/bin/helm /usr/local/bin/helm
 COPY --from=helm3 /usr/local/bin/helm /usr/local/bin/helm3
+COPY scripts/* /usr/local/bin/
 RUN apk add --update python3 && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
