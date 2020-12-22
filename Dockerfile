@@ -30,5 +30,4 @@ RUN apk add --update python3 && \
 RUN pip install yq --upgrade
 RUN chmod +x /usr/local/bin/kubectl \
  && rm /var/cache/apk/*
-RUN helm3 repo add stable https://kubernetes-charts.storage.googleapis.com
 
