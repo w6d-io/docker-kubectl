@@ -1,8 +1,3 @@
-FROM alpine:3.6 as helm3
-ENV DESIRED_VERSION v3.2.1
-RUN apk add --update ca-certificates openssl bash curl
-RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-
 FROM alpine:3.6
 ARG VCS_REF
 ARG BUILD_DATE
@@ -17,9 +12,9 @@ LABEL maintainer="${USER_NAME} <${USER_EMAIL}>" \
 
 ENV DESIRED_VERSION $DESIRED_VERSION
 RUN apk add --update ca-certificates openssl bash gettext git curl make jq coreutils gawk
+RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-COPY --from=helm3 /usr/local/bin/helm /usr/local/bin/helm
-COPY --from=helm3 /usr/local/bin/helm /usr/local/bin/helm3
+RUN ln -s /usr/local/bin/helm /usr/local/bin/helm3
 COPY scripts/* /usr/local/bin/
 RUN apk add --update python3 && \
     python3 -m ensurepip && \
