@@ -10,4 +10,4 @@ for resource in $(get_resources_from_rollout ${RELEASE_NAME} ${NS})
 do
   kubectl --namespace "${NS}" rollout status -w ${resource}
 done
-return 0
+exit 0
