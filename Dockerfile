@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM debian:10
 ARG VCS_REF
 ARG BUILD_DATE
 ARG VERSION
@@ -11,19 +11,15 @@ LABEL maintainer="${USER_NAME} <${USER_EMAIL}>" \
         org.label-schema.version=$VERSION
 
 ENV DESIRED_VERSION $DESIRED_VERSION
-RUN apk add --update ca-certificates openssl bash gettext git curl make jq coreutils gawk
-RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-RUN ln -s /usr/local/bin/helm /usr/local/bin/helm3
-COPY scripts/* /usr/local/bin/
-RUN apk add --update python3 && \
-    python3 -m ensurepip && \
-    rm -r /usr/lib/python*/ensurepip && \
+RUN apt update && apt install -y ca-certificates openssl bash gettext git curl make jq coreutils gawk python3 python3-pip && \
+    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash && \
+    curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
+    ln -s /usr/local/bin/helm /usr/local/bin/helm3 && \
     pip3 install --upgrade pip setuptools && \
     if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
-    rm -r /root/.cache
-RUN pip install yq --upgrade
-RUN chmod +x /usr/local/bin/kubectl \
- && rm /var/cache/apk/*
+    rm -rf /root/.cache && rm -rf /var/lib/apt/lists/* && \
+    pip install yq --upgrade && \
+    chmod +x /usr/local/bin/kubectl
+COPY scripts/* /usr/local/bin/
 
