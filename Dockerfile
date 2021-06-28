@@ -21,7 +21,6 @@ RUN apt update && apt install -y ca-certificates openssl bash gettext git curl m
     rm -rf /root/.cache && rm -rf /var/lib/apt/lists/* && \
     pip3 install yq --upgrade && \
     pip3 install awscli && \
-    aws configure && \
     chmod +x /usr/local/bin/kubectl
 COPY scripts/* /usr/local/bin/
 
