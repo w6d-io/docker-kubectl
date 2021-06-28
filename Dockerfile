@@ -20,6 +20,8 @@ RUN apt update && apt install -y ca-certificates openssl bash gettext git curl m
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
     rm -rf /root/.cache && rm -rf /var/lib/apt/lists/* && \
     pip install yq --upgrade && \
+    pip install awscli && \
+    aws configure && \
     chmod +x /usr/local/bin/kubectl
 COPY scripts/* /usr/local/bin/
 
