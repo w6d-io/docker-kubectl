@@ -6,4 +6,5 @@ This project is for build an image with :
 - jq
 - yq
 - gawk
+- aws cli
 
