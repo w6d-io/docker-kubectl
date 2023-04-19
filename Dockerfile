@@ -20,6 +20,8 @@ RUN apt update && apt install -y apt-transport-https ca-certificates gnupg opens
     curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash && \
     curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
     ln -s /usr/local/bin/helm /usr/local/bin/helm3 && \
+    curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/local/bin/go-yq && \
+    chmod +x /usr/local/bin/go-yq && \
     pip3 install --upgrade pip setuptools && \
     if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
     if [ ! -h /usr/bin/python ]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
