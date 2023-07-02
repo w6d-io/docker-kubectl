@@ -19,6 +19,10 @@ RUN apt update && apt install -y apt-transport-https ca-certificates gnupg opens
     apt-get install google-cloud-sdk -y && \
     curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash && \
     curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip -u awscliv2.zip && \
+    ./aws/install -i /usr/local/aws-cli -b /usr/local/bin && \
+    rm -rf aws && \
     ln -s /usr/local/bin/helm /usr/local/bin/helm3 && \
     curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/local/bin/go-yq && \
     chmod +x /usr/local/bin/go-yq && \
@@ -27,7 +31,6 @@ RUN apt update && apt install -y apt-transport-https ca-certificates gnupg opens
     if [ ! -h /usr/bin/python ]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
     rm -rf /root/.cache && rm -rf /var/lib/apt/lists/* && \
     pip3 install yq --upgrade && \
-    pip3 install awscli && \
     pip3 install jira && \
     pip3 install tabulate && \
     pip3 install docopt && \
