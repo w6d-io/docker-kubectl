@@ -12,7 +12,7 @@ LABEL maintainer="${USER_NAME} <${USER_EMAIL}>" \
 
 ENV DESIRED_VERSION=$DESIRED_VERSION \
     DEBIAN_FRONTEND=noninteractive
-RUN apt update && apt install -y apt-transport-https ca-certificates gnupg openssl bash gettext git curl jq make coreutils gawk postgresql-client python3 python3-pip && \
+RUN apt update && apt install -y apt-transport-https ca-certificates gnupg openssl bash gettext git curl jq make coreutils gawk postgresql-client python3 python3-pip unzip && \
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && \
     apt-get update -y && \
